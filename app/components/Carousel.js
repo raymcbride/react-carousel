@@ -4,7 +4,7 @@ export class Carousel extends React.Component{
 
   render() {
     return (
-        <div className="carousel">
+      <div className="carousel">
         <div className="stage">
           <ul className="slides">
             {this.props.images.map(function(image, i) {
@@ -18,7 +18,7 @@ export class Carousel extends React.Component{
               onClick={this.props.onClickLeft}>&#9664;</span>
           <span className="arrow next"
               onClick={this.props.onClickRight}>&#9654;</span>
-          </div>
+        </div>
           <ul className="controls">
             {this.props.images.map(function(image, i) {
               var activeClass = i === this.props.selected ? "active" : "inactive";
@@ -27,7 +27,7 @@ export class Carousel extends React.Component{
                          onClick={this.onClickCircle.bind(this, i)}></li>;
             }.bind(this))}
           </ul>
-        </div>
+      </div>
     )
   }
 

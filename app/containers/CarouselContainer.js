@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Carousel} from '../components/Carousel';
 import {carouselStore} from '../stores/carouselStore';
 import {carouselActions} from '../actions/carouselActions';
@@ -7,6 +8,7 @@ export class CarouselContainer extends React.Component{
 
   constructor(props) {
     super(props);
+
     this.state = {carousel: carouselStore.getState()};
     this.state.carousel.images = props.images;
     this.state.carousel.speed = props.speed;
@@ -15,6 +17,7 @@ export class CarouselContainer extends React.Component{
   }
 
   componentDidMount(){
+    console.log(ReactDOM.findDOMNode(this).attributes);
     carouselStore.getState().interval = setInterval(this.autoplay,
       carouselStore.getState().speed);
     carouselStore.addChangeListener(this._onChange);

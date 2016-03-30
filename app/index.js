@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {CarouselContainer} from './containers/CarouselContainer.js'
+import {CarouselContainer} from './containers/CarouselContainer.js';
+import domready from 'domready'
 
-var settings = {
-  images: ["image1.png",
-           "image2.png",
-           "image3.png"],
-  speed: 5000
-}
+domready(function () {
+  Array.prototype.map.call(
+  document.querySelectorAll('[data-carousel]'),
+  function(elem) {
+    let settings = window.JSON.parse(elem.getAttribute('data-carousel'));
+    return ReactDOM.render(
+      <CarouselContainer {...settings} />, elem);
+  })
+});
 
-ReactDOM.render(
-  <CarouselContainer {...settings} />, document.getElementById('app')
-);
 

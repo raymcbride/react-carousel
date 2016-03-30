@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "domready": "^1.0.8",
     "flux": "^2.1.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
