@@ -2,20 +2,22 @@ import {AppDispatcher} from '../dispatcher/AppDispatcher';
 import {carouselConstants} from '../constants/carouselConstants';
 
 export const carouselActions = {
-  prevImage: function(){
+  prevImage: function(carousel){
     AppDispatcher.handleAction({
-      actionType: carouselConstants.PREV_IMAGE
+      actionType: carouselConstants.PREV_IMAGE,
+      data: carousel
     })
   },
-  nextImage: function(){
+  nextImage: function(carousel){
     AppDispatcher.handleAction({
-      actionType: carouselConstants.NEXT_IMAGE
+      actionType: carouselConstants.NEXT_IMAGE,
+      data: carousel
     })
   },
-  selectImage: function(index){
+  selectImage: function(index, carousel){
     AppDispatcher.handleAction({
       actionType: carouselConstants.SELECT_IMAGE,
-      data: index
+      data: [index, carousel]
     })
   }
 };

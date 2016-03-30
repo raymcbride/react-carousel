@@ -8,18 +8,21 @@ export class CarouselContainer extends React.Component{
 
   constructor(props) {
     super(props);
-
-    this.state = {carousel: carouselStore.getState()};
-    this.state.carousel.images = props.images;
-    this.state.carousel.speed = props.speed;
-    this.state.carousel.interval = props.interval;
+    let carouselData =  {
+      current: 0,
+      images : props.images,
+      speed: props.speed,
+      interval: 0
+    };
+    this.carousel = props.name;
+    carouselStore.bootstrap(this.carousel, carouselData);
     this._onChange = this._onChange.bind(this);
+    this.autoplay = this.autoplay.bind(this);
   }
 
   componentDidMount(){
-    console.log(ReactDOM.findDOMNode(this).attributes);
-    carouselStore.getState().interval = setInterval(this.autoplay,
-      carouselStore.getState().speed);
+    carouselStore.getState(this.carousel).interval = setInterval(this.autoplay,
+      carouselStore.getState(this.carousel).speed);
     carouselStore.addChangeListener(this._onChange);
   }
 
@@ -28,49 +31,49 @@ export class CarouselContainer extends React.Component{
   }
 
   handleClickLeft(){
-    clearInterval(carouselStore.getState().interval);
-    carouselActions.prevImage();
+    clearInterval(carouselStore.getState(this.carousel).interval);
+    carouselActions.prevImage(this.carousel);
   }
 
   handleClickRight(){
-    clearInterval(carouselStore.getState().interval);
-    carouselActions.nextImage();
+    clearInterval(carouselStore.getState(this.carousel).interval);
+    carouselActions.nextImage(this.carousel);
   }
 
   autoplay(){
-    carouselActions.nextImage();
+    carouselActions.nextImage(this.carousel);
   }
 
   handleSelectImage(index){
-    clearInterval(carouselStore.getState().interval);
-    carouselActions.selectImage(index);
+    clearInterval(carouselStore.getState(this.carousel).interval);
+    carouselActions.selectImage(index, this.carousel);
   }
 
   handleMouseOver(){
-    clearInterval(carouselStore.getState().interval);
+    clearInterval(carouselStore.getState(this.carousel).interval);
   }
 
   handleMouseOut(autoplay){
-    carouselStore.getState().interval = setInterval(autoplay,
-      carouselStore.getState().speed);
+    carouselStore.getState(this.carousel).interval = setInterval(autoplay,
+      carouselStore.getState(this.carousel).speed);
   }
 
   _onChange(){
     this.setState({
-      carousel: carouselStore.getState()
+      carousel: carouselStore.getState(this.carousel)
     });
   }
 
   render(){
     return (
-      <Carousel images={this.state.carousel.images}
-                selected={this.state.carousel.current}
-                onClickLeft={this.handleClickLeft}
-                onClickRight={this.handleClickRight}
-                onMouseOver={this.handleMouseOver}
+      <Carousel images={carouselStore.getState(this.carousel).images}
+                selected={carouselStore.getState(this.carousel).current}
+                onClickLeft={this.handleClickLeft.bind(this)}
+                onClickRight={this.handleClickRight.bind(this)}
+                onMouseOver={this.handleMouseOver.bind(this)}
                 onMouseOut={this.handleMouseOut.bind(this, this.autoplay)}
-                onSelectImage={this.handleSelectImage}
-                interval={this.state.carousel.interval}
+                onSelectImage={this.handleSelectImage.bind(this)}
+                interval={carouselStore.getState(this.carousel).interval}
       />
 
     )

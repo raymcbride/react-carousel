@@ -40,8 +40,11 @@ export class Carousel extends React.Component{
 Carousel.propTypes = {
   images: React.PropTypes.array.isRequired,
   selected: React.PropTypes.number.isRequired,
+  interval: React.PropTypes.number.isRequired,
   onClickLeft: React.PropTypes.func.isRequired,
   onClickRight: React.PropTypes.func.isRequired,
   onSelectImage: React.PropTypes.func.isRequired,
+  onMouseOver: React.PropTypes.func.isRequired,
+  onMouseOut: React.PropTypes.func.isRequired,
 }
 
