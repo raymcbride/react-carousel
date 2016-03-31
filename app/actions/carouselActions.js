@@ -2,22 +2,34 @@ import {AppDispatcher} from '../dispatcher/AppDispatcher';
 import {carouselConstants} from '../constants/carouselConstants';
 
 export const carouselActions = {
-  prevImage: function(carousel){
+  prevImage: function(id){
     AppDispatcher.handleAction({
       actionType: carouselConstants.PREV_IMAGE,
-      data: carousel
+      data: id
     })
   },
-  nextImage: function(carousel){
+  nextImage: function(id){
     AppDispatcher.handleAction({
       actionType: carouselConstants.NEXT_IMAGE,
-      data: carousel
+      data: id
     })
   },
-  selectImage: function(index, carousel){
+  selectImage: function(index, id){
     AppDispatcher.handleAction({
       actionType: carouselConstants.SELECT_IMAGE,
-      data: [index, carousel]
+      data: [index, id]
+    })
+  },
+  setInterval: function(interval, id){
+    AppDispatcher.handleAction({
+      actionType: carouselConstants.SET_INTERVAL,
+      data: [interval, id]
+    })
+  },
+  initialise: function(state, id){
+    AppDispatcher.handleAction({
+      actionType: carouselConstants.INITIALISE,
+      data: [state, id]
     })
   }
 };

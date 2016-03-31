@@ -5,20 +5,12 @@ import EventEmitter from 'events';
 
 let CHANGE_EVENT = 'change';
 
-//var _carousel = {
-//    current: 0,
-//    images : [],
-//    speed: 3000,
-//    interval: 0
-//};
-
-let _store = {
-}
+let store = {}
 
 export const carouselStore = objectAssign({}, EventEmitter.prototype, {
 
-  bootstrap: function(carousel, carouselData){
-    _store[carousel] = carouselData;
+  initialise: function(state, id){
+    store[id] = state;
   },
 
   addChangeListener: function(cb){
@@ -29,25 +21,28 @@ export const carouselStore = objectAssign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, cb);
   },
 
-  getState: function(carousel) {
-    return _store[carousel];
+  getState: function(id) {
+    return store[id];
   },
 
-  nextImage: function(carousel) {
-    var next = _store[carousel].current + 1;
-    if (next >= _store[carousel].images.length) next = 0;
-    _store[carousel].current = next;
-
+  nextImage: function(id) {
+    var next = store[id].current + 1;
+    if (next >= store[id].images.length) next = 0;
+    store[id].current = next;
   },
 
-  prevImage: function(carousel) {
-    var next = _store[carousel].current - 1;
-    if (next < 0) next = _store[carousel].images.length - 1;
-    _store[carousel].current = next;
+  prevImage: function(id) {
+    var next = store[id].current - 1;
+    if (next < 0) next = store[id].images.length - 1;
+    store[id].current = next;
   },
 
-  selectImage: function(index, carousel) {
-    _store[carousel].current = index;
+  selectImage: function(index, id) {
+    store[id].current = index;
+  },
+
+  setInterval: function(interval, id) {
+    store[id].interval = interval;
   },
 
 });
@@ -65,6 +60,14 @@ AppDispatcher.register(function(payload){
       break;
     case carouselConstants.SELECT_IMAGE:
       carouselStore.selectImage(action.data[0], action.data[1]);
+      carouselStore.emit(CHANGE_EVENT);
+      break;
+    case carouselConstants.SET_INTERVAL:
+      carouselStore.setInterval(action.data[0], action.data[1]);
+      carouselStore.emit(CHANGE_EVENT);
+      break;
+    case carouselConstants.INITIALISE:
+      carouselStore.initialise(action.data[0], action.data[1]);
       carouselStore.emit(CHANGE_EVENT);
       break;
 

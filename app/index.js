@@ -12,5 +12,3 @@ domready(function () {
       <CarouselContainer {...settings} />, elem);
   })
 });
-
-
