@@ -4,16 +4,15 @@ import {Carousel} from '../components/Carousel';
 import {carouselStore} from '../stores/carouselStore';
 import {carouselActions} from '../actions/carouselActions';
 
-export class CarouselContainer extends React.Component{
+export class CarouselContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state =  {
       current: props.current,
       images : props.images,
-      speed: props.speed ? props.speed : 5000,
-      interval: props.interval ? props.interval : 0
+      speed: props.speed,
+      interval: props.interval
     };
     this.id = props.id;
     this.onChange = this.onChange.bind(this);
@@ -90,5 +89,7 @@ CarouselContainer.propTypes = {
 }
 
 CarouselContainer.defaultProps = {
-  current: 0
+  current: 0,
+  speed: 5000,
+  interval: 0
 }
