@@ -7,7 +7,9 @@ domready(function () {
   Array.prototype.map.call(
   document.querySelectorAll('[data-carousel]'),
   function(elem) {
-    let settings = window.JSON.parse(elem.getAttribute('data-carousel'));
+    let settings = window.JSON.parse(window.JSON.stringify(
+        window.JSON.parse(elem.getAttribute('data-carousel')))
+    );
     return ReactDOM.render(
       <CarouselContainer {...settings} />, elem);
   })
